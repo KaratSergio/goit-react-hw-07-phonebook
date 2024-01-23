@@ -4,15 +4,18 @@ import { nanoid } from '@reduxjs/toolkit';
 import * as selectors from '../../redux/selectors';
 
 import Notiflix from 'notiflix';
+import { Loader } from '../Loader/Loader';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faPhone, faCheck } from '@fortawesome/free-solid-svg-icons';
 
 import css from './ContactForm.module.css';
 
-export const ContactForm = () => {
+const ContactForm = () => {
   const dispatch = useDispatch();
   const contacts = useSelector(selectors.selectContacts);
+  const isLoading = useSelector(selectors.selectLoading);
+  const error = useSelector(selectors.selectError);
 
   const handleSubmit = e => {
     e.preventDefault();
@@ -47,6 +50,8 @@ export const ContactForm = () => {
 
   return (
     <form className={css['form-container']} onSubmit={handleSubmit}>
+      {isLoading && <Loader />}
+      {error && <div className={css.error}>{error}</div>}
       <label className={css['name-label']}>
         <span className={css['label-box']}>
           <FontAwesomeIcon icon={faUser} className={css['icon-input']} />

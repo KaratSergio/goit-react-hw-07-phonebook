@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteContact } from '../../services/api';
 import * as selectors from '../../redux/selectors';
+import { Loader } from '../Loader/Loader';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faTrash } from '@fortawesome/free-solid-svg-icons';
@@ -29,24 +30,27 @@ const ContactListItem = ({ contact, onDelete }) => (
 
 const ContactList = () => {
   const dispatch = useDispatch();
-  const contacts = useSelector(selectors.selectContacts);
-  const filter = useSelector(selectors.selectFilter);
-
-  const userContacts = (contacts, filter) =>
-    contacts.filter(({ name }) => name.toLowerCase().includes(filter ?? ''));
+  const filteredContacts = useSelector(selectors.selectFilteredContacts);
+  const isLoading = useSelector(selectors.selectLoading);
+  const error = useSelector(selectors.selectError);
 
   const handleDelete = contact => dispatch(deleteContact(contact.id));
 
   return (
-    <ul className={css.list}>
-      {userContacts(contacts, filter).map(contact => (
-        <ContactListItem
-          key={contact.id}
-          contact={contact}
-          onDelete={handleDelete}
-        />
-      ))}
-    </ul>
+    <div>
+      {isLoading && <Loader />}
+      {error && <div className={css.error}>{error}</div>}
+
+      <ul className={css.list}>
+        {filteredContacts.map(contact => (
+          <ContactListItem
+            key={contact.id}
+            contact={contact}
+            onDelete={handleDelete}
+          />
+        ))}
+      </ul>
+    </div>
   );
 };
 
