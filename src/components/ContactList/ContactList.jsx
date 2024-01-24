@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteContact } from '../../services/api';
+import { deleteContact } from '../../redux/operations';
 import * as selectors from '../../redux/selectors';
 import { Loader } from '../Loader/Loader';
 

@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { addContact } from '../../services/api';
-import { nanoid } from '@reduxjs/toolkit';
+import { addContact } from '../../redux/operations';
 import * as selectors from '../../redux/selectors';
+import { nanoid } from '@reduxjs/toolkit';
 
 import Notiflix from 'notiflix';
 import { Loader } from '../Loader/Loader';
