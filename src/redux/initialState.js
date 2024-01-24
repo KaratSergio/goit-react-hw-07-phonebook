@@ -4,9 +4,7 @@ const initialState = {
     isLoading: false,
     error: null,
   },
-  filter: {
-    filter: '',
-  },
+  filter: '',
 };
 
 export default initialState;
